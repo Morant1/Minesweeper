@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper game</title>
+</head>
+<body onload="initGame()">
+    <div class='timerDisplay'></div>
+    <button class="level" onclick="addLevel('Beginner')">Beginner</button>
+    <button class="level" onclick="addLevel('Medium')">Medium</button>
+    <button class="level" onclick="addLevel('Expert')">Expert</button>
+    <br>
+    <button class="emoji" onclick="initGame()"></button>
+
+    <!--<button class="add difficult" onclick="addDifficulties()">Add Difficulty</button>-->
+
+    <h1> Minesweeper game</h1>
+    <table cellpadding="1">
+        <tbody class="board">
+
+        </tbody>
+    <script src = "js/util.js"></script>
+    <script src = "js/main.js"></script>
+</body>
+</html>

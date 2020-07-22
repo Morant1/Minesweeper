@@ -1,0 +1,69 @@
+* {
+    border-color: white;
+    margin: 0 auto;
+    text-align: center;
+
+}
+
+body {
+    padding-top: 30px;
+    background-image: url(../nums.jpg);
+    background-size: cover;
+
+}
+
+h1{
+font-family: 'Rowdies', cursive;
+color:white;
+text-shadow: 2px 2px black;
+margin-bottom: 30px;
+margin-top: 20px;
+
+
+}
+
+.level {
+    font-family: 'Rowdies',cursive;
+    background-color: grey;
+    width:80px;
+    margin-bottom: 15px;
+
+}
+.timerDisplay {
+    font-family: 'Rowdies',cursive;
+    font-size: 20px;
+    background-color: rgb(190, 190, 190);
+    padding-top:30px;
+    width: 110px;
+    height:50px;
+    position: absolute;
+    left:80%;
+    border:4px white solid;
+
+}
+
+button {
+
+    width:50px;
+    height:50px;
+    margin: 2px 2px;
+
+}
+
+
+button:hover {
+    border: rgb(200, 233, 11) 2px solid;
+    cursor: pointer;
+
+}
+
+.clicked {
+
+    background-color: gray;
+    border-radius: 50%;
+    color:white;
+    font-size:18px;
+    border: white 2px solid;
+
+}
+
