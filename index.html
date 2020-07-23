@@ -9,9 +9,19 @@
 </head>
 <body onload="initGame()">
     <div class='timerDisplay'></div>
+    <button class="safe_click" onclick="addSafeClick()">Safe Click<p><span>3</span> available</p></button>
     <button class="level" onclick="addLevel('Beginner')">Beginner</button>
     <button class="level" onclick="addLevel('Medium')">Medium</button>
     <button class="level" onclick="addLevel('Expert')">Expert</button>
+    <div class="light">
+        <button id='light_1' onclick="getHint('1')">💡</button>
+        <button id='light_2' onclick="getHint('2')">💡</button>
+        <button id ='light_3' onclick="getHint('3')">💡</button>
+    </div>
+
+
+    
+    
     <br>
     <button class="emoji" onclick="initGame()"></button>
 
