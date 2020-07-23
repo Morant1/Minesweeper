@@ -1,8 +1,9 @@
 'use strict';
 var gLevel = { //If user does not press level, default is SIZE 4;
     SIZE: 4,
-    MINES: 2,
-    LIGHTS: 3
+    MINES: 4, //BECAUSE OF 3 LIVES BONUS
+    LIGHTS: 3,
+    LIVES: 3
 };
 var FLAG = '🚩';
 var MINE = '💥';
@@ -24,20 +25,23 @@ var gCellsWithMines;
 var gTimerInterval;
 var gIsHint = false;
 var gSafeClick = 3; //BONUS
-
-
+var gIsLive = false; //BONUS
+var gIdLive; //BONUS
 
 function initGame() { 
     gFirstClick = 1;
     gCellsWithMines = [];
+    gIdLive = null;
     document.querySelector('.emoji').innerText = HAPPY;
     gBoard = buildBoard();
     gGame.isOn = true;
+    gIsLive = false;
     renderBoard(gBoard);
 
     document.querySelector('.timerDisplay').style.display = 'none';
     document.querySelector('.timerDisplay').innerHTML = '';
     document.querySelector('.light').style.display = 'none';
+    document.querySelector('.lives').style.display = 'none';
 
     if (gTimerInterval) {
         clearInterval(gTimerInterval);
@@ -53,6 +57,8 @@ function initGame() {
 }
 
 function gameOver() {
+    document.querySelector('.lives').style.display = 'none';
+    document.querySelector('.safe_click').style.display = 'none';
     document.querySelector('.timerDisplay').style.display = 'none';
     gGame.isOn = false;
     gBoard = '';
@@ -157,6 +163,11 @@ function startMineAfterFirstClick(gBoard, i, j) {
     createRandomMine(gBoard, i, j);
     setMinesNegsCount(gBoard);
 
+    document.querySelector('.lives').style.display = 'block';
+    for (var i = 0; i < gLevel.LIVES; i++) {
+        document.getElementById(`live_${i + 1}`).style.display = 'block';
+    }
+
     document.querySelector('.light').style.display = 'block';
     for (var i = 0; i < gLevel.LIGHTS; i++) {
         document.getElementById(`light_${i + 1}`).style.display = 'block';
@@ -179,8 +190,17 @@ function cellClicked(elCell, i, j) {
             gGame.shownCount++;
 
             if (cell.isMine) {
+                if (!gIsLive) {
                 elCell.innerText = MINE;
                 StepOnMine();
+                } else {
+                    alert("You just stepped on a Mine!");
+                    document.getElementById(`live_${gIdLive}`).style.display = 'none';
+                    elCell.innerText = MINE;
+                    gGame.shownCount--;
+                    gGame.markedCount++
+                    gIsLive = false;
+                }
 
             } else if (cell.minesAroundCount) {
                 elCell.innerText = cell.minesAroundCount;
@@ -188,7 +208,6 @@ function cellClicked(elCell, i, j) {
             } else {
                 expandShown(elCell, i, j);
             }
-
             checkGameOver()
         }
 
@@ -210,7 +229,7 @@ function expandShown(elCell, i, j) {
             if (y < 0 || y >= gLevel.SIZE) continue;
             if (!gBoard[x][y].isShown && !gBoard[x][y].isMarked) {
                 gBoard[x][y].isShown = true;
-                gGame.shownCount++
+                gGame.shownCount++;
                 var elID = document.getElementById(`${x}-${y}`);
                 elID.innerText = (gBoard[x][y].minesAroundCount ? gBoard[x][y].minesAroundCount : '');
                 elID.classList.add('clicked');
@@ -304,7 +323,7 @@ function revealAndClose(elCell, i, j) {
 
     setTimeout(function () {
 
-        elCell.innerText = '';
+        elCell.innerText = (cell.isMarked) ? FLAG: '';
         elCell.classList.remove('green');
         removeColorToNeighbors(i, j);
 
@@ -358,7 +377,7 @@ function addLevel(level) {
     switch (level) {
         case "Beginner":
             gLevel.SIZE = 4;
-            gLevel.MINES = 2;
+            gLevel.MINES = 4;  //BECAUSE OF 3 LIVES BONUS
             break;
         case "Medium":
             gLevel.SIZE = 8;
@@ -387,7 +406,7 @@ function addSafeClick() {
 
     var setTime = setTimeout(function(){
         removeColorToNeighborsRandomly(arr);
-    },1000)
+    },500)
 
     }
 
@@ -450,4 +469,16 @@ function removeColorToNeighborsRandomly(arr) {
 
 
     }
+}
+
+
+// -----------------------------------BONUS 3 LIVES-----------------------------------
+function getLive(id) {
+    if (gGame.isOn && gFirstClick === 0) {
+        gIsLive = true;
+        gIdLive = id;
+
+    }
+
+
 }
